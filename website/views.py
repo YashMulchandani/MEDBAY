@@ -71,17 +71,17 @@ def checkout(request):
     return render(request, 'checkout.html', {'items':items, 'order':order})
 
 
-    def updateItem(request):
-        data = json.loads(request.data)
-        productId = data['productId']
-        action = data['action']
+def updateItem(request):
+    data = json.loads(request.data)
+    productId = data['productId']
+    action = data['action']
 
-        print('Action:', action)
-        print('productId', productId)
+    print('Action:', action)
+    print('productId', productId)
 
-        customer = request.user.customer
-        product = product.objects.get(id=productId)
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    customer = request.user.customer
+    product = product.objects.get(id=productId)
+    order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
@@ -92,35 +92,34 @@ def checkout(request):
 
         orderItem.save()
 
-        if orderItem.quantity <=0:
-           orderItem.delete()
+    if orderItem.quantity <=0:
+       orderItem.delete()
 
-        return UserResponse('item was added', safe=False)
+    return UserResponse('item was added', safe=False)
 
-        def processOrder(request):
-            transaction_id = datetime.datetime.now().timestamp()
-            data = json.loads(request.body)
+def processOrder(request):
+    transaction_id = datetime.datetime.now().timestamp()
+    data = json.loads(request.body)
 
-            if request.user.is_authenticated:
-                customer = request.user.customer
-                order, created = Order.objects.get_or_create(customer=customer, complete=False)
-                total = float(data['from']['total'])
-                order.transaction_id = transaction_id
+    if request.user.is_authenticated:
+        customer = request.user.customer
+        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        total = float(data['from']['total'])
+        order.transaction_id = transaction_id
 
-            if total == order.get_cart_total:
-                      order.complete = True
-                      order.save()
+    if total == order.get_cart_total:
+        order.complete = True
+        order.save()
 
-            if order.shipping == True:
-                          shippingAddress.objects.create(
-                          customer=customer,
-                          order=order,
-                          address=data['shipping']['address'],
-                          city=data['shipping']['city'],
-                          state=data['shipping']['state'],
+    if order.shipping == True:
+        shippingAddress.objects.create(
+        customer=customer,
+        order=order,
+        address=data['shipping']['address'],
+        city=data['shipping']['city'],
+        state=data['shipping']['state'],
 
-                          )
-            else:
-                print('user is not logged in..')
-
-            return Response('payment-complete!', safe=False)
+        )
+    else:
+        print('user is not logged in..')
+        return Response('payment-complete!', safe=False)
