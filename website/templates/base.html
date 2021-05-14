@@ -23,6 +23,28 @@
 
   <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
 
+<script type="text/javascript">
+var user = '{{request.user}}'
+
+function getToken(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+const csrftoken = getToken('csrftoken');
+</script>
+
+
 </head>
 
 <body>
@@ -63,11 +85,11 @@
                         <li><a href="#">Supplements</a></li>
                         <li><a href="#">Vitamins</a></li>
                         <li><a href="#">Diet &amp; Nutrition</a></li>
-                        <li><a href="#">Others</a></li>
+                        <li><a href="#">others</a></li>
                       </ul>
                     </li>
                     <li><a href="#">Diet &amp; Nutrition</a></li>
-                    <li><a href="#">Others</a></li>
+                    <li><a href="#">others</a></li>
 
                   </ul>
                 </li>
@@ -101,8 +123,9 @@
       <div class="col-md-6 col-lg-4 mb-4 mb-lg-0">
 
         <div class="block-7">
-          <h3 class="footer-heading mb-4">About <strong class="text-primary">MEDBAY</strong></h3>
-          <p>MEDBAY brings to you an online platform, which can be accessed for all your health needs. We are trying to make healthcare a hassle-free experience for you. Get your allopathic, ayurvedic, homeopathic medicines, vitamins & nutrition supplements and other health-related products delivered at home.</p>
+          <h3 class="footer-heading mb-4">About <strong class="text-primary">Pharmative</strong></h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius quae reiciendis distinctio voluptates
+            sed dolorum excepturi iure eaque, aut unde.</p>
         </div>
 
       </div>
@@ -112,7 +135,7 @@
           <li><a href="#">Supplements</a></li>
           <li><a href="#">Vitamins</a></li>
           <li><a href="#">Diet &amp; Nutrition</a></li>
-          <li><a href="#">Other</a></li>
+          <li><a href="#">Tea &amp; Coffee</a></li>
         </ul>
       </div>
 
@@ -120,9 +143,9 @@
         <div class="block-5 mb-5">
           <h3 class="footer-heading mb-4">Contact Info</h3>
           <ul class="list-unstyled">
-            <li class="address">102, Arjun Nagar, New Delhi</li>
-            <li class="phone"><a href="tel://23923929210">+91 9926363660</a></li>
-            <li class="email">medbayindia@gmail.com</li>
+            <li class="address">203 Fake St. Mountain View, San Francisco, California, USA</li>
+            <li class="phone"><a href="tel://23923929210">+2 392 3929 210</a></li>
+            <li class="email">emailaddress@domain.com</li>
           </ul>
         </div>
 
@@ -149,6 +172,8 @@
 <script src="{% static 'website/js/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'website/js/cart.js' %}"></script>
 <script src="{% static 'website/js/main.js' %}"></script>
+
+<script type="text/javascript" src="(% static 'js/cart.js' %)" ></script>
 
 </body>
 
