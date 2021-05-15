@@ -40,8 +40,9 @@ def shop(request):
     return render(request, 'shop.html', {'products':products})
 
 
-def shop_single(request):
-    return render(request, 'shop_single.html', {})
+def shop_single(request, id, slug):
+    product = Product.objects.get(id=id)
+    return render(request, 'shop_single.html', {'product':product})
 
 
 def cart(request):
