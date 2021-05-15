@@ -90,8 +90,8 @@
             <div class="nonloop-block-3 owl-carousel">
               {% for product in products %}
               <div class="text-center item mb-4 item-v2">
-                <a href="{% url 'shop_single' %}"> <img src="{{product.imageURL}}" alt="Image"></a>
-                <h3 class="text-dark"><a href="{% url 'shop_single' %}">{{product.name}}</a></h3>
+                <a href="{% url 'shop_single' product.id %}"> <img src="{{product.imageURL}}" alt="Image"></a>
+                <h3 class="text-dark"><a href="{% url 'shop_single' product.id %}">{{product.name}}</a></h3>
                 <p class="price">Rs.{{product.price|floatformat:2}}</p>
               </div>
               {% endfor %}

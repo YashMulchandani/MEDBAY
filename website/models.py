@@ -12,12 +12,18 @@ class Customer(models.Model):
         return self.fname
 
 class Product(models.Model):
+    id = models.AutoField(primary_key=True, null=False)
     slug = models.SlugField(max_length=200, db_index=True ,null = True)
     name = models.CharField(max_length=200, null=True)
     detail = models.TextField(max_length=1000, null=True, blank=True)
     mg = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     images = models.ImageField(null=True, blank=True)
+    manufacturer = models.CharField(max_length=200, null=True)
+    storage = models.FloatField(null=True, blank=True)
+    uses = models.TextField(max_length=1000, null=True, blank=True)
+    side_effect = models.TextField(max_length=1000, null=True, blank=True)
+    benifits = models.TextField(max_length=1000, null=True, blank=True)
 
     def __str__(self):
         return self.name
