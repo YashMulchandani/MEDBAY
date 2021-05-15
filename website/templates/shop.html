@@ -7,7 +7,7 @@
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="home.html">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+          <div class="col-md-12 mb-0"><a href="{% url 'home' %}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
           <div class="col-lg-6">
             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter by Price</h3>
             <div id="slider-range" class="border-primary"></div>
-            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="" />
+            <input type="text" name="text" id="amount" class="form-control border-0 pl-0 bg-white" disabled="">
           </div>
           <div class="col-lg-6 text-lg-right">
             <h3 class="mb-3 h6 text-uppercase text-black d-block">Filter</h3>
@@ -44,7 +44,7 @@
             <a href="shop_single.html"> <img src="{{product.imageURL}}" alt="Image"></a>
             <h3 class="text-dark"><a href="shop_single.html">{{product.name}}</a></h3>
             <p class="price">&mdash; Rs.{{product.price|floatformat:2}}</p>
-            <a href="cart.html" data-product={{product.id}} data-action='add' class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary update-cart">Add To Cart</a>
+            <a href="{% url 'cart' %}" data-product={{product.id}} data-action='add' class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary update-cart">Add To Cart</a>
           </div>
           {% endfor %}
         </div>
