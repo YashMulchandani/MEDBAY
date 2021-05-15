@@ -45,18 +45,15 @@
                     <td>
                       <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" type="button">&minus;</button>
+                          <button class="btn btn-outline-primary js-btn-minus" data-product={{item.product.id}} data-action="remove" class="chg-quantity
+                          update-cart" type="button">&minus;</button>
                         </div>
-                        <input type="text" class="form-control text-center" value="" placeholder={{item.quantity}}
+                        <input type="text" class="form-control text-center" value="{{item.quantity}}" placeholder=""
                           aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" type="button">&plus;</button>
-                          <img data-product={{item.product.id}} data-action="add" class="chg-quantity
-                          update-cart" src="(% static 'images/arrow-up.png'%)"
-
-                          <img data-product={{item.product.id}} data-action="remove" class="chg-quantity
-                          update-cart" src="(% static 'images/arrow-down.png'%)"
-                        </div>
+                          <button class="btn btn-outline-primary js-btn-plus" data-product={{item.product.id}} data-action="add" class="chg-quantity
+                          update-cart" type="button">&plus;</button>
+                          </div>
                       </div>
 
                     </td>
