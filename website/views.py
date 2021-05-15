@@ -44,6 +44,8 @@ def shop_single(request, id, slug):
     product = Product.objects.get(id=id)
     return render(request, 'shop_single.html', {'product':product})
 
+def shop_single_without_params(request):
+    return render(request ,'shop_single.html', {})
 
 def cart(request):
     if request.user.is_authenticated:
