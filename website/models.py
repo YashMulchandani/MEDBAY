@@ -11,6 +11,23 @@ class Customer(models.Model):
     def __str__(self):
         return self.fname
 
+
+class Category(models.Model):
+    title = models.CharField(max_length=500)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural='2. Categories'
+
+    def __str__(self):
+        return self.title
+
+class Manufacturer(models.Model):
+    title = models.CharField(max_length=500)
+
+    def __str__(self):
+        return self.title
+
 class Product(models.Model):
     id = models.AutoField(primary_key=True, null=False)
     slug = models.SlugField(max_length=200, db_index=True ,null = True)
@@ -18,8 +35,9 @@ class Product(models.Model):
     detail = models.TextField(max_length=1000, null=True, blank=True)
     mg = models.FloatField(null=True, blank=True)
     price = models.FloatField()
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
     images = models.ImageField(null=True, blank=True)
-    manufacturer = models.CharField(max_length=200, null=True)
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE, null=True, blank=True)
     storage = models.FloatField(null=True, blank=True)
     uses = models.TextField(max_length=1000, null=True, blank=True)
     side_effect = models.TextField(max_length=1000, null=True, blank=True)
@@ -27,6 +45,17 @@ class Product(models.Model):
 
     def __str__(self):
         return self.name
+
+    def get_cat_list(self):
+        k = self.category # for now ignore this instance method
+
+        breadcrumb = ["dummy"]
+        while k is not None:
+            breadcrumb.append(k.slug_cat)
+            k = k.parent
+        for i in range(len(breadcrumb)-1):
+            breadcrumb[i] = '/'.join(breadcrumb[-1:i-1:-1])
+        return breadcrumb[-1:0:-1]
 
     @property
     def imageURL(self):
