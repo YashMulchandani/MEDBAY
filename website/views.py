@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.core.mail import send_mail
 from django.http import JsonResponse
-
+from django.core.paginator import Paginator
 import datetime
 from .models import *
 
@@ -33,7 +33,6 @@ def contact(request):
 
 def about(request):
     return render(request, 'about.html', {})
-
 
 def shop(request):
     products = Product.objects.all()
@@ -98,6 +97,8 @@ def updateItem(request):
 
     return UserResponse('item was added', safe=False)
 
+from django.views.decorators.csrf import csrf_exempt
+@csrf_exempt
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
     data = json.loads(request.body)
