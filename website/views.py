@@ -1,9 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.http import JsonResponse
 
 import datetime
 from .models import *
+import json
 
 def index(request):
     return render(request, 'index.html', {})
@@ -42,7 +43,8 @@ def shop(request):
 
 def shop_single(request, id):
     data = Product.objects.get(id=id)
-    return render(request, 'shop_single.html', {'data':data})
+    # Pass quantity or update quantity
+    return render(request, 'shop_single.html', {'data':data, 'quantity': 1})
 
 
 def cart(request):
@@ -72,31 +74,22 @@ def checkout(request):
     return render(request, 'checkout.html', {'items':items, 'order':order})
 
 
-def updateItem(request):
-    data = json.loads(request.data)
-    productId = data['productId']
-    action = data['action']
+def addItem(request, id, quantity):
+    productId = id 
 
-    print('Action:', action)
-    print('productId', productId)
 
     customer = request.user.customer
-    product = product.objects.get(id=productId)
+    product = Product.objects.get(id=productId)
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-
-        orderItem.save()
+    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product, quantity=quantity)
 
     if orderItem.quantity <=0:
        orderItem.delete()
+    items = order.orderitem_set.all()
+    print(order)
 
-    return UserResponse('item was added', safe=False)
+    return redirect('/cart')
 
 def processOrder(request):
     transaction_id = datetime.datetime.now().timestamp()
@@ -113,7 +106,7 @@ def processOrder(request):
         order.save()
 
     if order.shipping == True:
-        shippingAddress.objects.create(
+        ShippingAddress.objects.create(
         customer=customer,
         order=order,
         address=data['shipping']['address'],

@@ -9,6 +9,8 @@ urlpatterns = [
     path('shop_single/<int:id>/', views.shop_single, name="shop_single"),
 	path('cart/', views.cart, name="cart"),
 	path('checkout/', views.checkout, name="checkout"),
-    path('update_Item/', views.updateItem, name="update_Item"),
+    path('add_item/<int:id>/<int:quantity>/', views.addItem, name="add_item"),
     path('process_order/', views.processOrder, name="process_order"),
 ]
+# Create different method to update the items, (update the quantity)
+# Total will be automaticall calculated from property functions
