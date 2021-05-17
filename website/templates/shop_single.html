@@ -30,24 +30,7 @@
 
             <p><strong class="text-primary h4">Rs.{{data.price}}</strong></p>
 
-
-
-            <div class="mb-5">
-              <div class="input-group mb-3" style="max-width: 220px;">
-                <div class="input-group-prepend">
-                  <button class="btn btn-outline-primary js-btn-minus" data-product={{data.id}} data-action="remove" class="chg-quantity
-                  update-cart" type="button">&minus;</button>
-                </div>
-                <input type="text" class="form-control text-center" value="0" placeholder="{{data.quantity}}"
-                  aria-label="Example text with button addon" aria-describedby="button-addon1">
-                <div class="input-group-append">
-                  <button class="btn btn-outline-primary js-btn-minus" data-product={{data.id}} data-action="remove" class="chg-quantity
-                  update-cart" type="button">&plus;</button>
-                </div>
-              </div>
-
-            </div>
-            <p><a href="{% url 'cart' %}" data-product={{product.id}} data-action='add' class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary update-cart">Add To Cart</a></p>
+            <p><a href="{% url 'cart_add' data.id %}" class="buy-now btn btn-sm height-auto px-4 py-3 btn-primary">Add To Cart</a></p>
 
             <div class="mt-5">
               <ul class="nav nav-pills mb-3 custom-pill" id="pills-tab" role="tablist">
@@ -111,6 +94,21 @@
       </div>
     </div>
 
+    <div class="site-section bg-light">
+      <div class="container">
+         <style media="screen">h3{text-align: center}</style>
+         <h3 class="text-dark">Related Products</h3>
+        <div class="row">
+          {% for product in products %}
+          <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
+            <a href="{% url 'shop_single' product.id product.slug %}"> <img src="{{product.imageURL}}" width="300" height="500" alt="Image"></a>
+            <h3 class="text-dark"><a href="{% url 'shop_single' product.id product.slug  %}">{{product.name}}</a></h3>
+            <p class="price">&mdash; Rs.{{product.price|floatformat:2}}</p>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
     <div class="site-section bg-image overlay" style="background-image: url('{% static 'website/.images/hero_bg_2.jpg' %});">
       <div class="container">
         <div class="row justify-content-center text-center">

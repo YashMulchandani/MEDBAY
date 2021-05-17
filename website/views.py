@@ -1,8 +1,10 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.core.paginator import Paginator
 import datetime
+from django.contrib.auth.decorators import login_required
+from cart.cart import Cart
 from .models import *
 
 def index(request):
@@ -36,26 +38,40 @@ def about(request):
 
 def shop(request):
     products = Product.objects.all()
-    return render(request, 'shop.html', {'products':products})
+    category = Category.objects.all()
+    manufacture = Manufacturer.objects.all()
 
+    return render(request, 'shop.html', {'products':products,'categories':category,'manufacturer':manufacture})
 
-def shop_single(request, id):
+def filter_product(request, slug):
+    products = Product.objects.filter(slug=slug)
+    category = Category.objects.all()
+    return render(request, 'category.html', {'products':products,'categories':category})
+
+def manufacturer_product(request, slug):
+    products = Product.objects.filter(manufacturer_slug=slug)
+    manufacture = Manufacturer.objects.all()
+    return render(request, 'manufacturer.html', {'products':products,'manufacturer':manufacture})
+
+def shop_single(request, id,slug):
     data = Product.objects.get(id=id)
-    return render(request, 'shop_single.html', {'data':data})
+    products = Product.objects.filter(slug=slug).exclude(id=id)
+
+    return render(request, 'shop_single.html', {'data':data,'products':products})
 
 
 def cart(request):
-    if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        items = order.orderitem_set.all()
-        cartItems = order.get_cart_items
-    else:
-        items = []
-        order = {'get_cart_total':0 ,'get_cart_items':0, 'shipping': False}
-        cartItems = order['get_cart_items']
-
-    return render(request, 'cart.html', {'items':items, 'order':order})
+#     if request.user.is_authenticated:
+#         customer = request.user.customer
+#         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+#         items = order.orderitem_set.all()
+#         cartItems = order.get_cart_items
+#     else:
+#         items = []
+#         order = {'get_cart_total':0 ,'get_cart_items':0, 'shipping': False}
+#         cartItems = order['get_cart_items']
+#
+     return render(request, 'cart.html', {})#'items':items, 'order':order})
 
 def checkout(request):
     if request.user.is_authenticated:
@@ -70,58 +86,59 @@ def checkout(request):
 
     return render(request, 'checkout.html', {'items':items, 'order':order})
 
+def thankyou(request):
+    return render(request, 'thankyou.html', {})
 
-def updateItem(request):
-    data = json.loads(request.data)
-    productId = data['productId']
-    action = data['action']
 
-    print('Action:', action)
-    print('productId', productId)
-
-    customer = request.user.customer
-    product = product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
-
-    orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
-
-    if action == 'add':
-        orderItem.quantity = (orderItem.quantity + 1)
-    elif action == 'remove':
-        orderItem.quantity = (orderItem.quantity - 1)
-
-        orderItem.save()
-
-    if orderItem.quantity <=0:
-       orderItem.delete()
-
-    return UserResponse('item was added', safe=False)
-
-from django.views.decorators.csrf import csrf_exempt
-@csrf_exempt
-def processOrder(request):
-    transaction_id = datetime.datetime.now().timestamp()
-    data = json.loads(request.body)
+@login_required(login_url="/users/login")
+def cart_add(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
 
     if request.user.is_authenticated:
-        customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
-        total = float(data['from']['total'])
-        order.transaction_id = transaction_id
-
-    if total == order.get_cart_total:
-        order.complete = True
-        order.save()
-
-    if order.shipping == True:
-        shippingAddress.objects.create(
-        customer=customer,
-        order=order,
-        address=data['shipping']['address'],
-        city=data['shipping']['city'],
-        state=data['shipping']['state'],
-
-        )
+         customer = request.user.customer
+         order, created = Order.objects.get_or_create(customer=customer, complete=False)
+         items = order.orderitem_set.all()
+         cartItems = order.get_cart_items
     else:
-        print('user is not logged in..')
-        return Response('payment-complete!', safe=False)
+        items = []
+        order = {'get_cart_total':0 ,'get_cart_items':0, 'shipping': False}
+        cartItems = order['get_cart_items']
+
+    return render(request, 'cart.html', {'items':items, 'order':order})
+
+@login_required(login_url="/users/login")
+def item_clear(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.remove(product)
+    return redirect("shop.html")
+
+
+@login_required(login_url="/users/login")
+def item_increment(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.add(product=product)
+    return redirect("cart")
+
+
+@login_required(login_url="/users/login")
+def item_decrement(request, id):
+    cart = Cart(request)
+    product = Product.objects.get(id=id)
+    cart.decrement(product=product)
+    return redirect("cart")
+
+
+@login_required(login_url="/users/login")
+def cart_clear(request):
+    cart = Cart(request)
+    cart.clear()
+    return redirect("shop.html")
+
+
+@login_required(login_url="/users/login")
+def cart_detail(request):
+    return render(request, 'cart.html')

@@ -4,19 +4,17 @@
 {% block title %} Shop MedBay{% endblock %}
 {% block content %}
 <style>
-.syntomps{padding-left: 50px;}
-.manufacture{padding-left: 50px;}
+  .syntomps{padding-left: 50px;}
 </style>
     <div class="bg-light py-3">
       <div class="container">
         <div class="row">
-          <div class="col-md-12 mb-0"><a href="{% url 'home' %}">Home</a> <span class="mx-2 mb-0">/</span> <strong class="text-black">Store</strong></div>
+          <div class="col-md-12 mb-0"><a href="{% url 'home' %}">Home</a> <span class="mx-2 mb-0">/</span><strong class="text-black">Store</strong>
         </div>
       </div>
     </div>
+
     <div class="syntomps">
-
-
     <div class="row">
     <ul class="nav nav-tabs">
       <li class="nav-item dropdown">
@@ -28,21 +26,9 @@
         </div>
       </li>
     </ul>
-
-    <div class="manufacture">
-    <ul class="nav nav-tabs">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Manufacturer</a>
-        <div class="dropdown-menu">
-          {% for manufacture in manufacturer %}
-          <a class="dropdown-item" href="{% url 'manufacturer' manufacture.slug   %}">{{manufacture}}</a>
-          {% endfor %}
-        </div>
-      </li>
-    </ul>
   </div>
-    </div>
-    </div>
+</div>
+
 
     <div class="site-section bg-light">
       <div class="container">
@@ -50,7 +36,7 @@
           {% for product in products %}
           <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
             <a href="{% url 'shop_single' product.id product.slug %}"> <img src="{{product.imageURL}}" width="250" height="500" alt="Image"></a>
-            <h3 class="text-dark"><a href="{% url 'shop_single'  product.id product.slug  %}">{{product.name}}</a></h3>
+            <h3 class="text-dark"><a href="{% url 'shop_single'  product.id product.slug   %}">{{product.name}}</a></h3>
             <p class="price">&mdash; Rs.{{product.price|floatformat:2}}</p>
           </div>
           {% endfor %}

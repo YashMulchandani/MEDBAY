@@ -13,6 +13,7 @@ class Customer(models.Model):
 
 
 class Category(models.Model):
+    id = models.AutoField(primary_key=True, null=False)
     title = models.CharField(max_length=500)
     slug = models.SlugField(unique=True, blank=True, null=True)
 
@@ -23,10 +24,16 @@ class Category(models.Model):
         return self.title
 
 class Manufacturer(models.Model):
+    id = models.AutoField(primary_key=True, null=False)
     title = models.CharField(max_length=500)
+    slug = models.SlugField(unique=True, blank=True, null=True)
+
+    class Meta:
+        verbose_name_plural='3. Manufacturer'
 
     def __str__(self):
         return self.title
+
 
 class Product(models.Model):
     id = models.AutoField(primary_key=True, null=False)
@@ -36,7 +43,8 @@ class Product(models.Model):
     mg = models.FloatField(null=True, blank=True)
     price = models.FloatField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE, null=True)
-    images = models.ImageField(null=True, blank=True)
+    image = models.ImageField(null=True, blank=True)
+    manufacturer_slug = models.SlugField(max_length=200, db_index=True ,null = True)
     manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE, null=True, blank=True)
     storage = models.FloatField(null=True, blank=True)
     uses = models.TextField(max_length=1000, null=True, blank=True)
@@ -46,21 +54,11 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-    def get_cat_list(self):
-        k = self.category # for now ignore this instance method
-
-        breadcrumb = ["dummy"]
-        while k is not None:
-            breadcrumb.append(k.slug_cat)
-            k = k.parent
-        for i in range(len(breadcrumb)-1):
-            breadcrumb[i] = '/'.join(breadcrumb[-1:i-1:-1])
-        return breadcrumb[-1:0:-1]
 
     @property
     def imageURL(self):
         try:
-            url = self.images.url
+            url = self.image.url
         except:
             url = ''
         return url
@@ -89,7 +87,6 @@ class Order(models.Model):
         orderitems = self.orderitem_set.all()
         total = sum([item.get_total for item in orderitems])
         return total
-
     @property
     def get_cart_items(self):
         orderitems = self.orderitem_set.all()

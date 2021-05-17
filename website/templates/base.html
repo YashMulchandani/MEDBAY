@@ -22,7 +22,11 @@
   <link rel="stylesheet" href="{% static 'website/css/aos.css' %}">
 
   <link rel="stylesheet" href="{% static 'website/css/style.css' %}">
-
+  <style>
+  .lr{
+    padding-left: 5px;
+  }
+  </style>
 </head>
 
 <body>
@@ -54,25 +58,18 @@
                 <li class="active"><a href="{% url 'home' %}">Home</a></li>
                 <li><a href="{% url 'shop'  %}">Store</a></li>
                 <li class="has-children">
-                  <a href="#">Products</a>
+                  <a href="{% url 'about' %}">About</a>
                   <ul class="dropdown">
-                    <li><a href="#">Supplements</a></li>
-                    <li class="has-children">
-                      <a href="#">Vitamins</a>
-                      <ul class="dropdown">
-                        <li><a href="#">Supplements</a></li>
-                        <li><a href="#">Vitamins</a></li>
-                        <li><a href="#">Diet &amp; Nutrition</a></li>
-                        <li><a href="#">Others</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Diet &amp; Nutrition</a></li>
-                    <li><a href="#">Others</a></li>
-
+                    <li><a href="#">FAQ</a></li>
                   </ul>
                 </li>
-                <li><a href="{% url 'about' %}">About</a></li>
                 <li><a href="{% url 'contact' %}">Contact</a></li>
+                <li class="has-children">
+                  <span class="lr"><a href="#">Login</a>|<a href="#">Sign In</a></span>
+                  <ul class="dropdown">
+                    <li><a href="#">FAQ</a></li>
+                  </ul>
+                </li>
               </ul>
             </nav>
           </div>
@@ -149,8 +146,9 @@
 <script src="{% static 'website/js/aos.js' %}"></script>
 <script type="text/javascript" src="{% static 'website/js/cart.js' %}"></script>
 <script src="{% static 'website/js/main.js' %}"></script>
+
 <script type="text/javascript">
-var user = '{{request.user}}'
+/*var user = '{{request.user}}'
 
 function getToken(name) {
     let cookieValue = null;
@@ -167,7 +165,8 @@ function getToken(name) {
     }
     return cookieValue;
 }
-const csrftoken = getToken('csrftoken');
+const csrftoken = getToken('csrftoken');*/
+
 </script>
 
 </body>

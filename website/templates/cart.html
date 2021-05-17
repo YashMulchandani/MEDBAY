@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+{% load cart_tag %}
 
+Total Length :: {{request.session.cart|length}}
 {% load static %}
 {% block title %} Cart MedBay{% endblock %}
 {% block content %}
@@ -32,33 +34,31 @@
                   </tr>
                 </thead>
                 <tbody>
-                  {% for item in items %}
+                  {% for key, value in request.session.cart.items %}
 
                   <tr>
                     <td class="product-thumbnail">
-                      <img src="{{item.product.imageURL}}" alt="Image" class="img-fluid">
+                      <img src="{{value.image}}" alt="Image" class="img-fluid">
                     </td>
                     <td class="product-name">
-                      <h2 class="h5 text-black">{{item.product.name}}</h2>
+                      <h2 class="h5 text-black">{{value.name}}</h2>
                     </td>
-                    <td>Rs.{{item.product.price|floatformat:2}}</td>
+                    <td>Rs.{{value.price}}</td>
                     <td>
                       <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" data-product={{item.product.id}} data-action="remove" class="chg-quantity
-                          update-cart" type="button">&minus;</button>
+                          <button class="btn btn-outline-primary js-btn-minus" type="button"><a href="{% url 'item_decrement' value.product_id %}">&minus;</a></button>
                         </div>
-                        <input type="text" class="form-control text-center" value="{{item.quantity}}" placeholder=""
+                        <input type="text" class="form-control text-center" value="{{value.quantity}}" placeholder=""
                           aria-label="Example text with button addon" aria-describedby="button-addon1">
                         <div class="input-group-append">
-                          <button class="btn btn-outline-primary js-btn-plus" data-product={{item.product.id}} data-action="add" class="chg-quantity
-                          update-cart" type="button">&plus;</button>
+                          <button class="btn btn-outline-primary js-btn-plus" type="button"><a href="{% url 'item_increment' value.product_id %}">&plus;</a></button>
                           </div>
                       </div>
 
                     </td>
-                    <td>Rs.{{item.get_total}}</td>
-                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
+                    <td>Rs.{{ value.price|multiply:value.quantity }}</td>
+                    <td><a href="{% url 'cart_clear' %}" class="btn btn-primary height-auto btn-sm">X</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -71,10 +71,10 @@
           <div class="col-md-6">
             <div class="row mb-5">
               <div class="col-md-6 mb-3 mb-md-0">
-                <button class="btn btn-primary btn-md btn-block">Update Cart</button>
+                <button class="btn btn-outline-primary btn-md btn-block"><a href="{% url 'cart'%}">Update Cart</a></button>
               </div>
               <div class="col-md-6">
-                <button class="btn btn-outline-primary btn-md btn-block">Continue Shopping</button>
+                <button class="btn btn-outline-primary btn-md btn-block"><a href="{% url 'shop' %}">Continue Shopping</a></button>
               </div>
             </div>
             <div class="row">
@@ -126,5 +126,6 @@
           </div>
         </div>
       </div>
+
     </div>
     {% endblock %}
