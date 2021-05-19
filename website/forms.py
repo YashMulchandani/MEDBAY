@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+from website import models as website_models
 
 
 class NewUserForm(UserCreationForm):
@@ -20,4 +20,8 @@ class NewUserForm(UserCreationForm):
         user.Last_name = self.cleaned_data['Last_name']
         if commit:
             user.save()
+            # Creating record in Customer table
+            website_models.Customer.objects.get_or_create(
+                user=user, fname=user.First_name, lname=user.Last_name, email=user.email
+            )
         return user
