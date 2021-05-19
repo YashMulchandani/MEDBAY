@@ -4,9 +4,60 @@ from django.http import JsonResponse
 from django.core.paginator import Paginator
 import datetime
 from django.contrib.auth.decorators import login_required
-from cart.cart import Cart
+#from cart.cart import Cart
+from .forms import *
 import json
 from .models import *
+from django.contrib.auth import login, authenticate , logout
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib import messages
+#from django .contrib.auth.models import Customer
+from .decorators import unauthenticated_user
+
+@unauthenticated_user
+def signup(request):
+    if request.method == 'POST':
+        form = NewUserForm(request.POST)
+        if form.is_valid():
+            form.save()
+            username = form.cleaned_data.get('username')
+            raw_password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=raw_password)
+            login(request,user)
+            messages.success(request, f' welcome {username} !!')
+            return redirect("home")
+    else:
+        form = NewUserForm()
+    return render(request, 'register.html', {'form': form})
+
+@unauthenticated_user
+def login_User(request):
+
+    if request.method == 'POST':
+
+        form = AuthenticationForm(request, data=request.POST)
+        if form.is_valid():
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(username=username, password=password)
+            print('I m herrreee==',user)
+            if user is not None:
+                login(request, user)
+                messages.info(request, f"You are now logged in as {username}.")
+                return redirect('home')
+            else:
+                messages.error(request,"Invalid username or password.")
+        else:
+            messages.error(request,"Invalid username or password.")
+    form = AuthenticationForm()
+    return render(request, 'login.html', {'login_form':form})
+
+
+def logout_user(request):
+    logout(request)
+    messages.success(request, 'you are logged out')
+    return redirect('home')
 
 def index(request):
     return render(request, 'index.html', {})
@@ -127,7 +178,7 @@ def addItem(request, id, quantity):
     order, created = Order.objects.get_or_create(customer=customer, complete=False)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product, quantity=quantity)
-    
+
     # if action == 'add':
     #     orderItem.quantity = (orderItem.quantity + 1)
     # elif action == 'remove':

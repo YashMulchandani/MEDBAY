@@ -28,19 +28,21 @@
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
+            <form action="" method="POST">
+              {% csrf_token %}
             <div class="p-3 p-lg-5 border">
               <div class="form-group">
                 <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="country" name="country">
+                <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
               </div>
               <div class="form-group row">
                 <div class="col-md-6">
                   <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_fname" name="c_fname">
+                <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
                 </div>
                 <div class="col-md-6">
                   <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_lname" name="c_lname">
+          <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
                 </div>
               </div>
 
@@ -69,7 +71,7 @@
               <div class="form-group row mb-5">
                 <div class="col-md-6">
                   <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_email_address" name="c_email_address">
+                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
                 </div>
                 <div class="col-md-6">
                   <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
@@ -87,8 +89,7 @@
                       please login at the top of the page.</p>
                     <div class="form-group">
                       <label for="c_account_password" class="text-black">Account Password</label>
-                      <input type="email" class="form-control" id="c_account_password" name="c_account_password"
-                        placeholder="">
+                      <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
                     </div>
                   </div>
                 </div>
@@ -179,6 +180,8 @@
               </div>
 
             </div>
+          </form>
+
           </div>
           <div class="col-md-6">
 
@@ -352,4 +355,24 @@
            })
         }*/
       </script>
+
+
+
+      <!-- <script type="text/javascript">
+        var form_fields = document.getEalementByTagName('input')
+        form_fields[1].palceholder='Country';
+        form_fields[2].palceholder='First Name';
+        form_fields[3].palceholder='Last Name';
+        form_fields[4].palceholder='Address 1';
+        form_fields[5].palceholder='Address 2';
+        form_fields[6].palceholder='State / Country';
+        form_fields[7].palceholder='Posta / Zip';
+        form_fields[8].palceholder='Email Address';
+        form_fields[9].palceholder='Phone';
+        form_fields[10].palceholder='Account Password';
+
+        for (var fields in  form_fields){
+          form_fields[field].className += 'form-control'
+        }
+      </script> -->
     {% endblock %}

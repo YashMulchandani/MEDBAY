@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load cart_tag %}
+
 
 Total Length :: {{request.session.cart|length}}
 {% load static %}
@@ -60,7 +60,7 @@ Total Length :: {{request.session.cart|length}}
 
                     </td>
                     <td>Rs.{{item.get_total}}</td>
-                    <td><a href="{% url 'cart_clear' %}" class="btn btn-primary height-auto btn-sm">X</a></td>
+                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>

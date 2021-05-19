@@ -1,0 +1,37 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Med_Bay Login Form</title>
+    <link rel="stylesheet" href="{% static 'website/css/login.css' %}">
+    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous"> -->
+  <body  style="background-image: url({% static 'website/images/medical2.jpg' %});">
+    <form method="post", action=''>
+      {% csrf_token %}
+    <div class="login-box">
+
+
+        <h1>Login</h1>
+        <div class="textbox">
+          <i class="fa fa-user" aria-hidden="true"></i>
+          {{login_form.username}}<!-- <input type="text" placeholder="Username" name="" value=""> -->
+
+        </div>
+        <div class="textbox">
+          <i class="fa fa-lock" aria-hidden="true"></i>
+          {{login_form.password}}<!-- <input type="password" placeholder="Password" name="" value=""> -->
+
+
+        </div>
+        <div>
+          <input type="checkbox" checked="checked" name="remember"> Remember me
+        </div>
+
+        <input class="btn" type="submit" name="Sign in " value="Sign in">
+
+    </div>
+      </form>
+  </body>
+</html>
