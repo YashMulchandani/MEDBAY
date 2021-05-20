@@ -1,11 +1,15 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django_countries.fields import CountryField
+
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
+    username = models.CharField(max_length=200, null=True)
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
+    email = models.EmailField(max_length=200, null=True)
+    password = models.CharField(max_length=50, null=True)
 
 
     def __str__(self):
@@ -107,14 +111,17 @@ class OrderItem(models.Model):
 
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
-    address = models.CharField(max_length=200, null=True)
-    city = models.CharField(max_length=200, null=True)
+    #order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
+    address1 = models.CharField(max_length=200, null=True)
+    address2 = models.CharField(max_length=200, null=True)
+    country = CountryField(multiple=False, null=True)
     state = models.CharField(max_length=200, null=True)
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
     zipcode = models.CharField(max_length=200, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
+    save_info = models.BooleanField(default=False)
+    default = models.BooleanField(default=False)
+    use_default = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.address
+        return self.customer.username
