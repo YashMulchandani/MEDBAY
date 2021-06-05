@@ -150,7 +150,7 @@ def cart(request):
         order = {'get_cart_total':0 ,'get_cart_items':0, 'shipping': False}
         cartItems = order['get_cart_items']
 
-    return render(request, 'cart.html', {'products':products, 'items':items, 'order':order, 'cartItems':cartItems})
+    return render(request, 'cart.html', {'products':products, 'items':items, 'order':order})
 
 # Thankyou page
 def thankyou(request):
