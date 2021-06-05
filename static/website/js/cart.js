@@ -23,14 +23,14 @@ function updateUserOrder(productId, action){
   fetch(url, {
     method:'POST',
     headers:{
-          'content-type':'application/json'
+          'Content-Type':'application/json',
           'X-CSRFToken':csrftoken,
     },
-    body:stringify({'productId':, productId, 'action':, action})
+    body:JSON.stringify({'productId':productId, 'action':action})
   })
 
   .then((response) =>{
-    return response.json
+    return response.json()
   })
 
   .then((response) =>{

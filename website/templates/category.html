@@ -1,3 +1,4 @@
+<!-- CATEGORY SYNTOMPS -->
 {% extends 'base.html' %}
 
 {% load static %}
@@ -35,7 +36,7 @@
         <div class="row">
           {% for product in products %}
           <div class="col-sm-6 col-lg-4 text-center item mb-4 item-v2">
-            <a href="{% url 'shop_single' product.id product.slug %}"> <img src="{{product.imageURL}}" width="250" height="500" alt="Image"></a>
+            <a href="{% url 'shop_single' product.id product.slug %}"> <img src="{{product.imageURL}}" width="250" height="300" alt="Image"></a>
             <h3 class="text-dark"><a href="{% url 'shop_single'  product.id product.slug   %}">{{product.name}}</a></h3>
             <p class="price">&mdash; Rs.{{product.price|floatformat:2}}</p>
           </div>

@@ -7,8 +7,6 @@ body{
   background: url(medical2.jpg) no-repeat;
   background-size: cover;
 
-}
-
 .login-box{
   width: 280px;
   position: absolute;
@@ -60,5 +58,4 @@ body{
   font-size: 18px;
   cursor: pointer;
   margin: 12px 0;
-
 }

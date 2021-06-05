@@ -1,3 +1,4 @@
+<!-- CART PAGE -->
 {% extends 'base.html' %}
 
 
@@ -21,6 +22,7 @@ Total Length :: {{request.session.cart|length}}
       <div class="container">
         <div class="row mb-5">
           <form class="col-md-12" method="post">
+            {% csrf_token %}
             <div class="site-blocks-table">
               <table class="table table-bordered">
                 <thead>
@@ -30,7 +32,6 @@ Total Length :: {{request.session.cart|length}}
                     <th class="product-price">Price</th>
                     <th class="product-quantity">Quantity</th>
                     <th class="product-total">Total</th>
-                    <th class="product-remove">Remove</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -47,20 +48,17 @@ Total Length :: {{request.session.cart|length}}
                     <td>
                       <div class="input-group mb-3" style="max-width: 120px;">
                         <div class="input-group-prepend">
-                          <button class="btn btn-outline-primary js-btn-minus" data-product={{item.product.id}} data-action="remove" class="chg-quantity
-                         update-cart" type="button">&minus;</button>
+                          <button class="btn btn-outline-primary js-btn-minus chg-quantity update-cart" data-product={{item.product.id}} data-action="remove" type="button">&minus;</button>
                        </div>
                        <input type="text" class="form-control text-center" value="{{item.quantity}}" placeholder=""
                          aria-label="Example text with button addon" aria-describedby="button-addon1">
                        <div class="input-group-append">
-                         <button class="btn btn-outline-primary js-btn-plus" data-product={{item.product.id}} data-action="add" class="chg-quantity
-                         update-cart" type="button">&plus;</button>
-                          </div>
+                         <button class="btn btn-outline-primary js-btn-plus chg-quantity
+                         update-cart" data-product={{item.product.id}} data-action="add" type="button">&plus;</button>
+                        </div>
                       </div>
-
                     </td>
                     <td>Rs.{{item.get_total}}</td>
-                    <td><a href="#" class="btn btn-primary height-auto btn-sm">X</a></td>
                   </tr>
                   {% endfor %}
                 </tbody>
@@ -72,25 +70,11 @@ Total Length :: {{request.session.cart|length}}
         <div class="row">
           <div class="col-md-6">
             <div class="row mb-5">
-              <div class="col-md-6 mb-3 mb-md-0">
-                <button class="btn btn-outline-primary btn-md btn-block"><a href="{% url 'cart'%}">Update Cart</a></button>
-              </div>
               <div class="col-md-6">
                 <button class="btn btn-outline-primary btn-md btn-block"><a href="{% url 'shop' %}">Continue Shopping</a></button>
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-12">
-                <label class="text-black h4" for="coupon">Coupon</label>
-                <p>Enter your coupon code if you have one.</p>
-              </div>
-              <div class="col-md-8 mb-3 mb-md-0">
-                <input type="text" class="form-control py-3" id="coupon" placeholder="Coupon Code">
-              </div>
-              <div class="col-md-4">
-                <button class="btn btn-primary btn-md px-4">Apply Coupon</button>
-              </div>
-            </div>
+            
           </div>
           <div class="col-md-6 pl-5">
             <div class="row justify-content-end">

@@ -1,3 +1,5 @@
+<!-- CHECKOUT PAGE -->
+
 {% extends 'base.html' %}
 
 {% load static %}
@@ -16,162 +18,74 @@
       </div>
     </div>
 
+<!-- Default Address Option-->
+    <div>
+      <br>
+        <span class="mx-5 mb-0 text-black"> <a href="{% url 'use_default_address' user.id %}">Click here</a> if you have previously saved address</span>
+    </div>
+
+<!-- Billing Form -->
+    <form action="/checkout/" method="POST">
+      {% csrf_token %}
     <div class="site-section">
       <div class="container">
         <div class="row mb-5">
           <div class="col-md-12">
-            <div class="bg-light rounded p-3">
-              <p class="mb-0">Returning customer? <a href="#" class="d-inline-block">Click here</a> to login</p>
-            </div>
           </div>
         </div>
         <div class="row">
           <div class="col-md-6 mb-5 mb-md-0">
             <h2 class="h3 mb-3 text-black">Billing Details</h2>
-            <form action="" method="POST">
-              {% csrf_token %}
+
             <div class="p-3 p-lg-5 border">
+
               <div class="form-group">
-                <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+                <label for="country" class="text-black">Country <span class="text-danger">*</span></label>
+                <br>
+                {{form.country}}
               </div>
+
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+                  <label for="fname" class="text-black">First Name <span class="text-danger">*</span></label>
+                {{form.fname}}
                 </div>
+
                 <div class="col-md-6">
-                  <label for="c_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-          <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
+                  <label for="lname" class="text-black">Last Name <span class="text-danger">*</span></label>
+                  {{form.lname}}
                 </div>
               </div>
 
               <div class="form-group row">
                 <div class="col-md-12">
-                  <label for="c_address" class="text-black">Address <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_address" name="c_address" placeholder="Street address">
+                  <label for="address1" class="text-black">Street Address <span class="text-danger">*</span></label>
+                  {{form.address1}}
                 </div>
               </div>
 
               <div class="form-group">
-                <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
+                <label for="address1" class="text-black">Apartment Address <span class="text-danger">*</span></label>
+                {{form.address2}}
               </div>
 
               <div class="form-group row">
                 <div class="col-md-6">
-                  <label for="c_state_country" class="text-black">State / Country <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_state_country" name="c_state_country">
+                  <label for="c_state_country" class="text-black">State <span class="text-danger">*</span></label>
+                  {{form.state}}
                 </div>
+
                 <div class="col-md-6">
                   <label for="c_postal_zip" class="text-black">Postal / Zip <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-                </div>
-              </div>
-
-              <div class="form-group row mb-5">
-                <div class="col-md-6">
-                  <label for="c_email_address" class="text-black">Email Address <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-                </div>
-                <div class="col-md-6">
-                  <label for="c_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                  <input type="text" class="form-control" id="c_phone" name="c_phone" placeholder="Phone Number">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label for="c_create_account" class="text-black" data-toggle="collapse" href="#create_an_account"
-                  role="button" aria-expanded="false" aria-controls="create_an_account"><input type="checkbox" value="1"
-                    id="c_create_account"> Create an account?</label>
-                <div class="collapse" id="create_an_account">
-                  <div class="py-2">
-                    <p class="mb-3">Create an account by entering the information below. If you are a returning customer
-                      please login at the top of the page.</p>
-                    <div class="form-group">
-                      <label for="c_account_password" class="text-black">Account Password</label>
-                      <input type="text" class="form-control" id="c_postal_zip" name="c_postal_zip">
-                    </div>
-                  </div>
+                {{form.zipcode}}
                 </div>
               </div>
 
 
-              <div class="form-group">
-                <label for="c_ship_different_address" class="text-black" data-toggle="collapse"
-                  href="#ship_different_address" role="button" aria-expanded="false"
-                  aria-controls="ship_different_address"><input type="checkbox" value="1" id="c_ship_different_address">
-                  Ship To A Different Address?</label>
-                <div class="collapse" id="ship_different_address">
-                  <div class="py-2">
-
-                    <div class="form-group">
-                      <div class="form-group">
-                        <label for="c_country" class="text-black">Country <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="country" name="country">
-                      </div>
-                    </div>
-
-
-                    <div class="form-group row">
-                      <div class="col-md-6">
-                        <label for="c_diff_fname" class="text-black">First Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_fname" name="c_diff_fname">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_lname" class="text-black">Last Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_lname" name="c_diff_lname">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <label for="c_diff_companyname" class="text-black">Company Name </label>
-                        <input type="text" class="form-control" id="c_diff_companyname" name="c_diff_companyname">
-                      </div>
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-12">
-                        <label for="c_diff_address" class="text-black">Address <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_address" name="c_diff_address"
-                          placeholder="Street address">
-                      </div>
-                    </div>
-
-                    <div class="form-group">
-                      <input type="text" class="form-control" placeholder="Apartment, suite, unit etc. (optional)">
-                    </div>
-
-                    <div class="form-group row">
-                      <div class="col-md-6">
-                        <label for="c_diff_state_country" class="text-black">State / Country <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_state_country" name="c_diff_state_country">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_postal_zip" class="text-black">Posta / Zip <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_postal_zip" name="c_diff_postal_zip">
-                      </div>
-                    </div>
-
-                    <div class="form-group row mb-5">
-                      <div class="col-md-6">
-                        <label for="c_diff_email_address" class="text-black">Email Address <span
-                            class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_email_address" name="c_diff_email_address">
-                      </div>
-                      <div class="col-md-6">
-                        <label for="c_diff_phone" class="text-black">Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="c_diff_phone" name="c_diff_phone"
-                          placeholder="Phone Number">
-                      </div>
-                    </div>
-
-                  </div>
-
-                </div>
-              </div>
+              <div class="custom-control custom-checkbox">
+              {{form.save_info}}
+              <label class=" text-black"  for="save_info">Save as default address</label>
+            </div>
 
               <div class="form-group">
                 <label for="c_order_notes" class="text-black">Order Notes</label>
@@ -180,29 +94,11 @@
               </div>
 
             </div>
-          </form>
 
           </div>
           <div class="col-md-6">
 
-            <div class="row mb-5">
-              <div class="col-md-12">
-                <h2 class="h3 mb-3 text-black">Coupon Code</h2>
-                <div class="p-3 p-lg-5 border">
-
-                  <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
-                  <div class="input-group w-75">
-                    <input type="text" class="form-control" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code"
-                      aria-describedby="button-addon2">
-                    <div class="input-group-append">
-                      <button class="btn btn-primary btn-sm px-4" type="button" id="button-addon2">Apply</button>
-                    </div>
-                  </div>
-
-                </div>
-              </div>
-            </div>
-
+<!-- Order Details -->
             <div class="row mb-5">
               <div class="col-md-12">
                 <h2 class="h3 mb-3 text-black">Your Order</h2>
@@ -231,45 +127,19 @@
                     </tbody>
                   </table>
 
-                  <div class="border mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsebank" role="button"
-                        aria-expanded="false" aria-controls="collapsebank">Direct Bank Transfer</a></h3>
-
-                    <div class="collapse" id="collapsebank">
-                      <div class="py-2 px-4">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the
-                          payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="border mb-3">
-                    <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsecheque" role="button"
-                        aria-expanded="false" aria-controls="collapsecheque">Cheque Payment</a></h3>
-
-                    <div class="collapse" id="collapsecheque">
-                      <div class="py-2 px-4">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the
-                          payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
-                      </div>
-                    </div>
-                  </div>
-
                   <div class="border mb-5">
                     <h3 class="h6 mb-0"><a class="d-block" data-toggle="collapse" href="#collapsepaypal" role="button"
-                        aria-expanded="false" aria-controls="collapsepaypal">Paypal</a></h3>
-                        <button id="make-payment">Make Payment</button>
+                        aria-expanded="false" aria-controls="collapsepaypal">Pay on Delivery</a></h3>
 
                     <div class="collapse" id="collapsepaypal">
                       <div class="py-2 px-4">
-                        <p class="mb-0">Make your payment directly into our bank account. Please use your Order ID as the
-                          payment reference. Your order won’t be shipped until the funds have cleared in our account.</p>
+                        <p class="mb-0">Make your payment directly on your Doorsteps.</p>
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <button class="btn btn-primary btn-lg btn-block" onclick="window.location={% url 'thankyou' %}">Place
+                    <button class="btn btn-primary btn-lg btn-block" >Place
                       Order</button>
                   </div>
 
@@ -279,100 +149,5 @@
 
           </div>
         </div>
-        <!-- </form> -->
-      </div>
-    </div>
-
-    <script type="text/javascript">
-      /*var shipping = '{{order.shipping}}'
-
-      var total = '{{order.get_cart_total|floatformat:2}}'
-      if (shipping == 'False'){
-        document.getElementById('shipping-info').innerHTML = ''
-      }
-
-      if (user != 'AnonymousUser'){
-        document.getElementById('user-info').innerHTML = ''
-      }
-
-      if (shipping == 'False' && user != 'AnonymousUser'){
-        document.getElementById('form-wrapper').classList.add("hidden");
-        document.getElementById('payment-info').classList.remove("hidden");
-      }
-
-      var form = document getElementById('form')
-      form.addEventListener('submit', function(e)){
-        e.preventDefault()
-        console.log('form submited..')
-        document.getEalementById('form-button').classList.add('hidden')
-          document.getEalementById('payment-info').classList.remove('hidden')
-      })
-
-      document.getElementById('make-payment')addEventListener('click', function(e){
-        submitFormData()
-        })
-
-
-      function submitFormData(){
-        console.log('payment button clicked')}
-
-        var userFormData = {
-          'name' :null,
-          'email' :null,
-          'total' :total,
-        }
-        var shippingInfo = {
-          'address' :null,
-          'city' :null,
-          'state' :null,
-        }
-
-        if (shipping != 'False'){
-           shippingInfo.address = form.address.value
-           shippingInfo.city = form.city.value
-           shippingInfo.state = form.state.value
-         }
-
-         if (user == 'AnonymousUser'){
-            userFormData.name = form.name.value
-            userFormData.email = form.email.value
-         }
-
-           var url = '/process_order/'
-           fetch(url,{
-             method: 'POST',
-             headers:{
-               'content-type':'application/json'
-               'X-CSRFToken': csrftoken,
-             },
-             body:JSON.stringify({'form':userFormData, 'shipping': shippingInfo})
-           })
-           .then((response) => response.json())
-           .then((data) => {
-             console.Log('success:' data):
-             alert('transaction completed');
-             window.location.href = "{%url 'shop' %}"
-           })
-        }*/
-      </script>
-
-
-
-      <!-- <script type="text/javascript">
-        var form_fields = document.getEalementByTagName('input')
-        form_fields[1].palceholder='Country';
-        form_fields[2].palceholder='First Name';
-        form_fields[3].palceholder='Last Name';
-        form_fields[4].palceholder='Address 1';
-        form_fields[5].palceholder='Address 2';
-        form_fields[6].palceholder='State / Country';
-        form_fields[7].palceholder='Posta / Zip';
-        form_fields[8].palceholder='Email Address';
-        form_fields[9].palceholder='Phone';
-        form_fields[10].palceholder='Account Password';
-
-        for (var fields in  form_fields){
-          form_fields[field].className += 'form-control'
-        }
-      </script> -->
+        </form>
     {% endblock %}

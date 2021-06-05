@@ -1,58 +1,47 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Registration Form</title>
-    <link rel="stylesheet" href="{% static 'website/css/style_register.css' %}" type="text/css">
-  </head>
-  <body style="background-image: url({% static 'website/images/medical2.jpg' %});">
-<div class="main">
-<div class="register">
-  <h2>Register Here</h2>
-<form id="register" method="post">
-  {% csrf_token %}
+<!-- Sign-Up Page -->
 
-  <labe>Username<span aria-hidden="true" class="required">*</span></label>
-    <br>
-    {{form.username}}<!-- <input type="text" name="Username" id="email" placeholder="Enter Username" value=""> -->
-    <br><br>
-    <labe>First name<span aria-hidden="true" class="required">*</span></label>
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="main">
+  <center>
+  <div class="register">
+    <h2 class='text-black'>Sign-up Here</h2>
+    <form id="register" method="post">
+      {% csrf_token %}
+
+      <labe class=' text-black'>Username<span aria-hidden="true" class="required">*</span></label>
       <br>
-      {{form.First_name}}<!-- <input type="text" name="Username" id="email" placeholder="Enter Username" value=""> -->
+      {{form.username}}
+      <br><br>
+      <labe>First name<span aria-hidden="true" class="required">*</span></label>
+      <br>
+      {{form.First_name}}
       <br><br>
       <labe>Last Name<span aria-hidden="true" class="required">*</span></label>
-        <br>
-        {{form.Last_name}}<!-- <input type="text" name="Username" id="email" placeholder="Enter Username" value=""> -->
-        <br><br>
-    <label>Email<span aria-hidden="true" class="required">*</span> </label>
-    <br>
-    {{form.email}}<!-- <input type="email" name="email" id="email" placeholder="Enter Email" value=""> -->
-  <br><br>
-  <label>Password<span aria-hidden="true" class="required">*</span> </label>
-  <br>
-  {{form.password1}}<!-- <input type="Password" name="password" id="email" placeholder="Password" value=""> -->
-  <br><br>
-  <label>Confirm Password<span aria-hidden="true" class="required">*</span> </label>
-  <br>
-  {{form.password2}}<!-- <input type="password" name="password" id="email" placeholder="Confirm Password" value="" > -->
-  <br><br>
-  <input type="submit" name="Register" id="submit" value="Register">
-  </form>
-  </div>
+      <br>
+      {{form.Last_name}}
+      <br><br>
+      <label>Email<span aria-hidden="true" class="required">*</span> </label>
+      <br>
+      {{form.email}}
+      <br><br>
+      <label>Password<span aria-hidden="true" class="required">*</span> </label>
+      <br>
+      {{form.password1}}
+      <br><br>
+      <label>Confirm Password<span aria-hidden="true" class="required">*</span> </label>
+      <br>
+      {{form.password2}}
+      <br><br>
+      <div class="col-md-4">
+      <button class="btn btn-primary btn-md px-4">SIGN UP</button>
+      </div>
+      <p></p>
+      <p>Already have an account?<a href={% url 'login' %}>Sign In</p></a>
+      </form>
     </div>
-    <!-- <script type="text/javascript">
-      var form_fields = document.getEalementByTagName('input')
-      form_fields[1].palceholder='Username';
-      form_fields[2].palceholder='First Name';
-      form_fields[3].palceholder='Last Name';
-      form_fields[4].palceholder='Email';
-      form_fields[5].palceholder='Password';
-      form_fields[6].placeholder='Confirm Password'
-
-      for (var field in  form_fields){
-        form_fields[field].className += 'form-control'
-      }
-    </script> -->
-  </body>
-</html>
+  </center>
+</div>
+{% endblock %}

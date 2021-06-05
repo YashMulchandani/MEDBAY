@@ -1,37 +1,43 @@
-{% load static %}
+<!-- Sign-In Page -->
 
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Med_Bay Login Form</title>
-    <link rel="stylesheet" href="{% static 'website/css/login.css' %}">
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/fontawesome.min.css" integrity="sha384-wESLQ85D6gbsF459vf1CiZ2+rr+CsxRY0RpiF1tLlQpDnAgg6rwdsUF1+Ics2bni" crossorigin="anonymous"> -->
-  <body  style="background-image: url({% static 'website/images/medical2.jpg' %});">
-    <form method="post", action=''>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+    <form method="post">
+<br><br>
       {% csrf_token %}
     <div class="login-box">
+<center>
 
-
-        <h1>Login</h1>
+        <h1><strong class="text-primary">Sign In</strong></h1>
         <div class="textbox">
           <i class="fa fa-user" aria-hidden="true"></i>
-          {{login_form.username}}<!-- <input type="text" placeholder="Username" name="" value=""> -->
-
+          {{login_form.username}}
         </div>
+
+        <br>
+
         <div class="textbox">
           <i class="fa fa-lock" aria-hidden="true"></i>
-          {{login_form.password}}<!-- <input type="password" placeholder="Password" name="" value=""> -->
-
-
+          {{login_form.password}}
         </div>
-        <div>
-          <input type="checkbox" checked="checked" name="remember"> Remember me
+<p></p>
+
+      <center>
+        <a href={% url 'password_reset' %}>Forgot Password?</a>
+      </center>
+<p></p>
+        <div class="col-md-4">
+          <button class="btn btn-primary btn-md px-4">SIGN IN</button>
         </div>
-
-        <input class="btn" type="submit" name="Sign in " value="Sign in">
-
+<p></p>
+      <center>
+        <p>Don't have an Account?<a href={% url 'register' %}>Sign Up</a></p>
+      </center>
     </div>
+<br><br>
       </form>
-  </body>
-</html>
+
+
+      {% endblock %}

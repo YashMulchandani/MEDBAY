@@ -11,7 +11,7 @@ $bg-gray: #f9f9f9;
 	background-repeat: no-repeat;
 	background-position: center center;
 	position: relative;
-	
+
 	&, & > .container > .row {
 		min-height: 700px;
 		height: calc(80vh);
@@ -41,7 +41,7 @@ $bg-gray: #f9f9f9;
 		color: $white;
 		margin-bottom: 30px;
 		@include media-breakpoint-up(md) {
-			font-size: 70px;	
+			font-size: 70px;
 		}
 	}
 	p {
@@ -60,10 +60,10 @@ $bg-gray: #f9f9f9;
 			margin-top: 20%;
 			text-align: center;
 			@include media-breakpoint-up(md) {
-				margin-top: 30%;	
+				margin-top: 30%;
 			}
 		}
-		
+
 	}
 	.sub-title {
 		color: $white;
@@ -137,7 +137,7 @@ $bg-gray: #f9f9f9;
 			color: $gray-1;
 			letter-spacing: .05em;
 			font-size: 18px;
-		}	
+		}
 		p {
 			&:last-child {
 				margin-bottom: 0;
@@ -190,7 +190,7 @@ $bg-gray: #f9f9f9;
 			}
 			h3 {
 				font-size: 40px;
-			} 
+			}
 		}
 		&:hover {
 			.image {
@@ -290,7 +290,7 @@ $bg-gray: #f9f9f9;
 				position: absolute;
 				left: 0;
 				font-size: 20px;
-	
+
 				line-height: 1;
 				color: $primary;
 			}
@@ -335,7 +335,7 @@ $bg-gray: #f9f9f9;
 	}
 	.btn {
 		position: absolute;
-		
+
 		width: 80px;
 		// top: auto;
 		// right: 3px;
@@ -468,9 +468,9 @@ $bg-gray: #f9f9f9;
 .color-item {
 	.color {
 		width: 14px;
-		height: 14px;	
+		height: 14px;
 	}
-} 
+}
 
 .block-16 {
 	figure {
@@ -618,7 +618,7 @@ $bg-gray: #f9f9f9;
 		}
 	}
 
-	
+
 }
 
 .product-item {
@@ -702,7 +702,7 @@ $bg-gray: #f9f9f9;
 	border-bottom: 1px solid $bg-gray;
 }
 .custom-border-top {
-	border-top: 1px solid $bg-gray;	
+	border-top: 1px solid $bg-gray;
 }
 
 .height-auto {
@@ -932,7 +932,7 @@ $bg-gray: #f9f9f9;
 			line-height: 50px;
 			width: 70px;
 			height: 50px;
-			display: block; 
+			display: block;
 			background: $white;
 			font-size: 24px;
 
@@ -978,7 +978,7 @@ $bg-gray: #f9f9f9;
 		margin-right: 20px;
 
 		font-size: 26px;
-	
+
 		background: rgba($primary, 1);
 		color: $white;
 		border-radius: 50%;
@@ -1000,5 +1000,3 @@ $bg-gray: #f9f9f9;
 		background: $white;
 	}
 }
-
-

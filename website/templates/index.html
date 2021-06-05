@@ -1,15 +1,25 @@
+<!-- LOADER PAGE -->
 {% load static %}
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
     <meta http-equiv="refresh"
-    content="2; url = http://127.0.0.1:8000/home" />
+    content="5; url = http://127.0.0.1:8000/home" />
+    <link rel="stylesheet" href="{% static 'website/css/index.css' %}">
+
 
     <title></title>
 
   </head>
   <body>
-    <h4>Loading Please Wait...</h4>
+    <!-- https://dribbble.com/shots/3376812-Abstract-Activity-Indicator -->
+
+<div class="indicator">
+  <svg width="16px" height="12px">
+    <polyline id="back" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+    <polyline id="front" points="1 6 4 6 6 11 10 1 12 6 15 6"></polyline>
+  </svg>
+</div>
   </body>
 </html>

@@ -2,7 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django_countries.fields import CountryField
 
-
+# TABLE FOR CUSTOMER
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     username = models.CharField(max_length=200, null=True)
@@ -16,6 +16,7 @@ class Customer(models.Model):
         return self.fname
 
 
+# TABLE FOR CATEGORIES
 class Category(models.Model):
     id = models.AutoField(primary_key=True, null=False)
     title = models.CharField(max_length=500)
@@ -27,6 +28,8 @@ class Category(models.Model):
     def __str__(self):
         return self.title
 
+
+# TABLE FOR Manufacturer
 class Manufacturer(models.Model):
     id = models.AutoField(primary_key=True, null=False)
     title = models.CharField(max_length=500)
@@ -39,6 +42,7 @@ class Manufacturer(models.Model):
         return self.title
 
 
+# Table for Product
 class Product(models.Model):
     id = models.AutoField(primary_key=True, null=False)
     slug = models.SlugField(max_length=200, db_index=True ,null = True)
@@ -68,36 +72,33 @@ class Product(models.Model):
         return url
 
 
+# Table for ORDER
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return str(self.id)
 
-        @property
-        def shipping(self):
-            shipping = False
-            orderitems = self.OrderItem.objects.all()
-            for i in orderitems:
-                if i.product.digital == False:
-                   shipping = True
-            return shipping
 
+#function to get cart total
     @property
     def get_cart_total(self):
         orderitems = OrderItem.objects.filter(order_id=self.id)
         total = sum([item.get_total for item in orderitems])
         return total
 
+# Function to get total cart items
     @property
     def get_cart_items(self):
         orderitems = OrderItem.objects.filter(order_id=self.id)
         total = sum([item.quantity for item in orderitems])
         return total
 
+# Table for Order Item
 class OrderItem(models.Model):
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
@@ -109,6 +110,8 @@ class OrderItem(models.Model):
         total = self.product.price * self.quantity
         return total
 
+
+# Table for Shipping Address
 class ShippingAddress(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     #order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
@@ -116,12 +119,8 @@ class ShippingAddress(models.Model):
     address2 = models.CharField(max_length=200, null=True)
     country = CountryField(multiple=False, null=True)
     state = models.CharField(max_length=200, null=True)
+
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
     zipcode = models.CharField(max_length=200, null=True)
     save_info = models.BooleanField(default=False)
-    default = models.BooleanField(default=False)
-    use_default = models.BooleanField(default=False)
-
-    def __str__(self):
-        return self.customer.username

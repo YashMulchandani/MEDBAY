@@ -1,9 +1,12 @@
+<!-- SEARCH PAGE -->
 {% extends 'base.html' %}
 
 {% load static %}
 
 {% block content %}
-
+<!-- <style media="screen">
+  .nonloop-block-
+</style> -->
     <div class="site-section bg-light">
       <div class="container">
         <div class="row">
@@ -14,14 +17,14 @@
         <div class="row">
           {% for product in products %}
           <div class="col-md-12 block-3 products-wrap">
-            <div class="nonloop-block-3 owl-carousel">
+            <!-- <div class=" nonloop-block-3 owl-carousel"> -->
 
               <div class="text-center item mb-4 item-v2">
                 <a href="{% url 'shop_single' product.id product.slug %}"> <img src="{{product.imageURL}}" alt="Image"></a>
                 <h3 class="text-dark"><a href="{% url 'shop_single' product.id product.slug %}">{{product.name}}</a></h3>
                 <p class="price">Rs.{{product.price|floatformat:2}}</p>
               </div>
-            </div>
+            <!-- </div> -->
           </div>
           {% endfor %}
 
