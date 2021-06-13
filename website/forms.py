@@ -18,6 +18,7 @@ class NewUserForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super(NewUserForm, self).save(commit=False)
+        user.username = self.cleaned_data['username']
         user.email = self.cleaned_data['email']
         user.First_name = self.cleaned_data['First_name']
         user.Last_name = self.cleaned_data['Last_name']
@@ -25,7 +26,7 @@ class NewUserForm(UserCreationForm):
             user.save()
             # Creating record in Customer table
             website_models.Customer.objects.get_or_create(
-                user=user, fname=user.First_name, lname=user.Last_name, email=user.email
+                user=user, username = user.username, fname=user.First_name, lname=user.Last_name, email=user.email
             )
         return user
 

@@ -9,7 +9,6 @@ class Customer(models.Model):
     fname = models.CharField(max_length=200, null=True)
     lname = models.CharField(max_length=200, null=True)
     email = models.EmailField(max_length=200, null=True)
-    password = models.CharField(max_length=50, null=True)
 
 
     def __str__(self):
@@ -23,7 +22,7 @@ class Category(models.Model):
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     class Meta:
-        verbose_name_plural='2. Categories'
+        verbose_name_plural='Categories'
 
     def __str__(self):
         return self.title
@@ -36,7 +35,7 @@ class Manufacturer(models.Model):
     slug = models.SlugField(unique=True, blank=True, null=True)
 
     class Meta:
-        verbose_name_plural='3. Manufacturer'
+        verbose_name_plural='Manufacturer'
 
     def __str__(self):
         return self.title
@@ -76,9 +75,8 @@ class Product(models.Model):
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
-    product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
+    product = models.ForeignKey(Product, on_delete=models.SET_NULL, null=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
-    transaction_id = models.CharField(max_length=200, null=True)
 
     def __str__(self):
         return str(self.id)
@@ -100,6 +98,7 @@ class Order(models.Model):
 
 # Table for Order Item
 class OrderItem(models.Model):
+    customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     product = models.ForeignKey(Product, on_delete=models.SET_NULL, blank=True, null=True)
     order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null=True)
     quantity = models.IntegerField(default=1, null=True, blank=True)
