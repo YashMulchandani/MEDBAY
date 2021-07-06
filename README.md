@@ -29,8 +29,12 @@ worst case scenario a firm solution for preventing this problem is a must.
 REQUIREMENTS
 
 We have used 
+
         -- Python as a Backend Language
+        
         -- HTML & CSS as a Frontend Language
+        
         -- Django Framework
+        
         -- dbsqlite as Database
         
