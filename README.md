@@ -25,3 +25,12 @@ wrong medicine sometimes and sells the expensive medicines just to earn money.
 
 Health is a major player in a person’s life. So in order to get the necessary things even during the
 worst case scenario a firm solution for preventing this problem is a must.
+
+REQUIREMENTS
+
+We have used 
+        -- Python as a Backend Language
+        -- HTML & CSS as a Frontend Language
+        -- Django Framework
+        -- dbsqlite as Database
+        
