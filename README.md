@@ -34,7 +34,7 @@ We have used
         
         -- HTML & CSS as a Frontend Language
         
-        -- Django Framework
+        -- Django as a Framework
         
         -- dbsqlite as Database
         
